@@ -11,13 +11,14 @@ font-family: 'Raleway', sans-serif;
 
 export const ContainerReduzidoMobile= styled.div`
 width:100%;
+max-width:450px;
 height: 100%;
+padding: 25px 25px 16px 25px;;    
 display:flex;
 flex-direction:column;
-justify-content:center;
+justify-content:space-evenly;
 align-items:center;
 `
-
 export const TitleStyled = styled.h1`
 color:#FFFFFF;
 font-size:32px;
@@ -66,4 +67,58 @@ cursor: pointer;
 font-size: 15px;
 font-weight:700;
 
+`
+export const TopStyled = styled.section`
+    width:100%;
+    height: max-content;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+   
+
+    & >h3{
+        color: white;
+        font-size: 26px;
+        font-weight:700;
+    }
+`
+export const TransactionsBox = styled.section `
+    width:100%;
+    height:426px;
+    background-color:white;
+    border-radius:5px;
+    padding: 15px;
+
+`
+
+export const ButtonSection = styled.section `
+    width:100%;
+    display: flex;
+    justify-content:space-around;
+    align-items:center;
+
+    button{
+        cursor: pointer;
+        width:155px;
+        height:114px;
+        background-color:#A328D6;
+        border:none;
+        border-radius:5px;
+    }
+
+`
+
+export const TransactionLine = styled.span` 
+    display: flex;
+    justify-content:space-around;
+    align-items:center;
+`
+export const TransactionData = styled.article`
+    color:grey;
+`
+export const TransactionDescript = styled.article`
+    color:black;
+`
+export const TransactionValue = styled.article`
+    color:green;
 `

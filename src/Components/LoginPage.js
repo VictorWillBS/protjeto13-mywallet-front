@@ -1,21 +1,29 @@
 import {useContext,useEffect,useState} from "react"
-import { Link } from "react-router-dom"
-
+import { Link, useNavigate } from "react-router-dom"
+import { userDataContext } from "../Context/authContext"
 import GlobalStyle from "../assets/css/style-components-reste"
 import { ContainerTotal,ContainerReduzidoMobile,TitleStyled,FormStyled,ParagrafoStyled } from "../assets/css/styled-Components"
 import axios from "axios"
 
 export default function LoginPage(){
+    const {userData,setUserData} = useContext(userDataContext)
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
+    const navigate = useNavigate()
     function enviarlogin(e){
         e.preventDefault();
         const login ={
             email,
             password
         }
-        const promise = axios.post("localhost:5000/sign-in",login)
-        promise.then(()=>{console.log("SUCESSO")}).catch((error)=>{console.log(error)})
+        const promise = axios.post("http://localhost:5000/sign-in",login)
+        promise.then((res)=>{
+            const novoUserData = res.data
+            setUserData({...userData, ...novoUserData})
+            navigate("/transacoes")
+            console.log(userData)
+        })
+        .catch((error)=>{console.log(error)})
 
     }
 
@@ -37,7 +45,7 @@ export default function LoginPage(){
                 onChange={(e)=>setPassword(e.target.value)}
                 value = {password}
                 ></input>
-                <button>Entrar</button>
+                <button type="submit">Entrar</button>
             </FormStyled>
             <Link to="/cadastro" style={{ textDecoration: 'none' }}>
                 <ParagrafoStyled> Primeira vez? Cadastre-se!</ParagrafoStyled>

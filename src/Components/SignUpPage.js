@@ -17,8 +17,8 @@ export default function LoginPage(){
             email,
             password
         }
-        const promise = axios.post("localhost:5000/sign-up",cadastro)
-        promise.then(()=>{console.log("SUCESSO")}).catch((error)=>{console.log(error)})
+        const promise = axios.post("http://localhost:5000/sign-up",cadastro)
+        promise.then((res)=>{console.log(res)}).catch((error)=>{console.log(error)})
 
     }
 
@@ -45,7 +45,7 @@ export default function LoginPage(){
                 onChange={(e)=>setPassword(e.target.value)}
                 value = {password}
                 ></input>
-                <button>Entrar</button>
+                <button type="submit">Entrar</button>
             </FormStyled>
             <Link to="/" style={{ textDecoration: 'none' }}>
                 <ParagrafoStyled> Já tem cadastro? Entre já!</ParagrafoStyled>
