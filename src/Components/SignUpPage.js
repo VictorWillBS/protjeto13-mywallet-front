@@ -1,7 +1,7 @@
 
-import {useContext,useEffect,useState} from "react"
+import {useContext,useState} from "react"
 import { Link } from "react-router-dom"
-
+import { useNavigate } from "react-router-dom"
 import GlobalStyle from "../assets/css/style-components-reste"
 import { ContainerTotal,ContainerReduzidoMobile,TitleStyled,FormStyled,ParagrafoStyled } from "../assets/css/styled-Components"
 import axios from "axios"
@@ -10,6 +10,7 @@ export default function LoginPage(){
     const [name,setName] = useState("")
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
+    const navigate = useNavigate()
     function enviarlogin(e){
         e.preventDefault();
         const cadastro ={
@@ -18,7 +19,9 @@ export default function LoginPage(){
             password
         }
         const promise = axios.post("http://localhost:5000/sign-up",cadastro)
-        promise.then((res)=>{console.log(res)}).catch((error)=>{console.log(error)})
+        promise.then((res)=>{
+            navigate("/")
+        }).catch((error)=>{console.log(error)})
 
     }
 

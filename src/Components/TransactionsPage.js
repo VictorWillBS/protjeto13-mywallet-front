@@ -3,18 +3,21 @@ import { userDataContext } from "../Context/authContext";
 import { useState,useEffect, useContext } from "react";
 import GlobalStyle from "../assets/css/style-components-reste";
 import { ContainerTotal,ContainerReduzidoMobile,TransactionLine,ButtonSection,TransactionsBox,TopStyled,TransactionData,TransactionDescript,TransactionValue } from "../assets/css/styled-Components"
+import { useNavigate } from "react-router-dom";
 
-function Transaction(){
+function Transaction({date,value, description,type}){
+    let color;
+    type ==="entrada"? color ="#03AC00":color = "#C70000"
     return(
         <TransactionLine>
             <TransactionData>
-                <p>02/04p</p>
+                <p>{date}</p>
             </TransactionData>
             <TransactionDescript>
-                <p>pix</p>
+                <p>{description}</p>
             </TransactionDescript>
-            <TransactionValue>
-                <p>R$ 3000,00</p>
+            <TransactionValue color={color}>
+                <p>R$ {value}</p>
             </TransactionValue>
         </TransactionLine>
 
@@ -25,10 +28,12 @@ function Transaction(){
 
 
 export default function TransactionsPage(){
-    const [transacoes,SetTransacoes] = useState(undefined)
+    const [transacoes,SetTransacoes] = useState([])
+    const [loading,SetLoading] = useState(true)
     const {userData}=useContext(userDataContext)
     const {name,id,token}=userData
-    
+    const navigate= useNavigate();
+    let teste;
     
     const config = {
         headers: {
@@ -36,37 +41,54 @@ export default function TransactionsPage(){
             'Authorization': `Bearer ${token}`
         }
     }
-    console.log(config)
+    
+   
+
     useEffect(()=>{
         const promise = axios.get("http://localhost:5000/transactions",config)
         promise.then((res)=>{
             const arrayTrans= res.data
-            SetTransacoes({...arrayTrans})
+            SetTransacoes([...arrayTrans])
+            console.log("peguei os dados")
         })
         .catch((error)=> console.log(error))
     },[])
 
-    return(
-    <>
+
+        useEffect(()=>{
+            console.log("mudei var")
+            SetLoading(false)
+        },[transacoes])
+   
+ 
+
+   
+  
+    return( <>
         <GlobalStyle/>
         <ContainerTotal>
-        <ContainerReduzidoMobile>
-        <TopStyled>
-            <h3>{`Olá,${name}`}</h3>
-            <div>elemento 2</div>
-        </TopStyled>
-        <TransactionsBox>
-            <Transaction></Transaction>
-        </TransactionsBox>
-        <ButtonSection>
-            <button></button>
-            <button></button>
-        </ButtonSection>
-        </ContainerReduzidoMobile>
-             
+            <ContainerReduzidoMobile>
+                <TopStyled>
+                    <h3>{`Olá,${name}`}</h3>
+                    
+                </TopStyled>
+                <TransactionsBox>
+                {loading?"nada aq":transacoes.map((transacao) => <Transaction date={transacao.date} value={transacao.value} type={transacao.type} description={transacao.description} />)}
+                </TransactionsBox>
+                <ButtonSection>
+                    <button onClick={()=>{navigate(`/transacoes/novatransacao/${"entrada"}`)}}>
+                        <p>+</p>
+                        <p>Nova entrada</p>
+                    </button>
+                    <button onClick={()=>{navigate(`/transacoes/novatransacao/${"saida"}`)}}>
+                        <p>-</p>
+                        <p>Nova Saida</p>
+                    </button>
+                </ButtonSection>
+            </ContainerReduzidoMobile>
         </ContainerTotal>
-    
     </>)
+
     
 
 }

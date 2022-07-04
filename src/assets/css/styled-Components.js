@@ -19,6 +19,16 @@ flex-direction:column;
 justify-content:space-evenly;
 align-items:center;
 `
+export const ContainerFlexStart= styled.div`
+width:100%;
+max-width:450px;
+height: 100%;
+padding: 25px 25px 16px 25px;;    
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
+align-items:center;
+`
 export const TitleStyled = styled.h1`
 color:#FFFFFF;
 font-size:32px;
@@ -110,7 +120,7 @@ export const ButtonSection = styled.section `
 
 export const TransactionLine = styled.span` 
     display: flex;
-    justify-content:space-around;
+    justify-content:space-between;
     align-items:center;
 `
 export const TransactionData = styled.article`
@@ -120,5 +130,5 @@ export const TransactionDescript = styled.article`
     color:black;
 `
 export const TransactionValue = styled.article`
-    color:green;
+    color: ${props=>props.color};
 `
